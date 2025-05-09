@@ -12,6 +12,7 @@ from .playlist_track_with_track_schema import PlaylistTrackWithTrackSchema
 from .track_schema import TrackSchema
 from .track_with_relations_schema import TrackWithRelations
 
+
 __all__ = [
     "AlbumSchema",
     "ArtistSchema",
