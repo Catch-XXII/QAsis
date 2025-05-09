@@ -1,6 +1,5 @@
 from typing import TypeVar, Union, Type, Optional
 from locust import SequentialTaskSet
-from custom_enums import MethodType
 from backend.performance.models import BaseResponse
 import json
 
@@ -13,21 +12,23 @@ class ApiClient(SequentialTaskSet):
 
     def _request(
         self,
-        method: MethodType,
+        method: str,
         url: str,
         name: str,
         headers: dict,
         payload: Optional[str],
         response_model: Type[T],
     ) -> Union[T, None]:
+        method = method.upper()
+
         method_map = {
-            MethodType.GET: self.client.get,
-            MethodType.POST: self.client.post,
-            MethodType.PUT: self.client.put,
-            MethodType.PATCH: self.client.patch,
-            MethodType.DELETE: self.client.delete,
-            MethodType.HEAD: self.client.head,
-            MethodType.OPTIONS: self.client.options,
+            "GET": self.client.get,
+            "POST": self.client.post,
+            "PUT": self.client.put,
+            "PATCH": self.client.patch,
+            "DELETE": self.client.delete,
+            "HEAD": self.client.head,
+            "OPTIONS": self.client.options,
         }
 
         if method not in method_map:
@@ -44,7 +45,7 @@ class ApiClient(SequentialTaskSet):
             return None
 
     def _handle_response(
-        self, response, response_model: Type[T], method: Optional[MethodType] = None
+        self, response, response_model: Type[T], method: Optional[str] = None
     ) -> Union[T, None]:
         try:
             response_data = response.json()
@@ -55,10 +56,13 @@ class ApiClient(SequentialTaskSet):
         status = response.status_code
         if status in {200, 201} and isinstance(response_data, dict):
             print(f"{method or ''}: {json.dumps(response_data, indent=2)}")
-            model_instance = response_model()
-            model_instance.parse(response_data)
-            response.success()
-            return model_instance
+            try:
+                model_instance = response_model.model_validate(response_data)
+                response.success()
+                return model_instance
+            except Exception as e:
+                response.failure(f"Validation failed: {e}")
+                return None
 
         error_message = {
             400: "Invalid request body format",
@@ -77,7 +81,7 @@ class ApiClient(SequentialTaskSet):
         self,
         url: str,
         name: str,
-        method: MethodType,
+        method: str,
         headers: dict,
         payload: Optional[str],
         response_model: Type[T],
