@@ -1,0 +1,18 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+
+$custom-border-color: coral;
+$custom-border-width: 2px;
+$custom-border-style: dashed;
+
+.custom-border {
+  border: $custom-border-width $custom-border-style $custom-border-color;
+}

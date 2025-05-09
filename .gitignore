@@ -1,0 +1,102 @@
+# PyCharm IDE
+.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+flake8-report/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Logs
+*.log
+
+# dotenv
+.env
+.env.*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# pyright
+typings/
+
+# PyInstaller
+*.manifest
+*.spec
+build/
+dist/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Other common
+*.swp
+*.bak
+*.tmp
+
+# test outputs
+*.out
+*.err
+*.log
+
+# SQLite DBs
+*.sqlite3
+
+# profiling data
+*.prof
+
+# Ignore frontend build artifacts
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env
+
+# Ignore backend Python artifacts
+/backend/__pycache__/
+/backend/.venv/
+/backend/.env
+/backend/*.sqlite3
