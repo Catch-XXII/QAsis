@@ -25,11 +25,5 @@ passlib[bcrypt]==1.7.4
 pytest==8.2.0
 httpx==0.27.0
 ruff==0.4.4
-black==24.4.2
-
-flake8
-flake8-bugbear
-flake8-docstrings
-isort
 pre-commit
-flake8-html
+
