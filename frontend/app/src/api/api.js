@@ -2,7 +2,7 @@ import axios from "axios";
 
 // ENV'den veya sabit olarak API adresi
 const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:4141/v1";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/v1";
 
 // Token varsa storage’dan al
 const getAuthToken = () => localStorage.getItem("access_token");

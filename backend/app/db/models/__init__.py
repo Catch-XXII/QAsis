@@ -9,3 +9,18 @@ from .media_type import MediaType
 from .playlist import Playlist
 from .playlist_track import PlaylistTrack
 from .track import Track
+
+
+__all__ = [
+    "Album",
+    "Artist",
+    "Customer",
+    "Employee",
+    "Genre",
+    "Invoice",
+    "InvoiceLine",
+    "MediaType",
+    "Playlist",
+    "PlaylistTrack",
+    "Track",
+]

@@ -9,3 +9,17 @@ from .media_type_service import MediaTypeService
 from .playlist_service import PlaylistService
 from .playlist_track_service import PlaylistTrackService
 from .track_service import TrackService
+
+__all__ = [
+    "AlbumService",
+    "ArtistService",
+    "CustomerService",
+    "EmployeeService",
+    "GenreService",
+    "InvoiceLineService",
+    "InvoiceService",
+    "MediaTypeService",
+    "PlaylistService",
+    "PlaylistTrackService",
+    "TrackService",
+]

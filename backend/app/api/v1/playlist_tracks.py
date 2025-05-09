@@ -1,12 +1,9 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.database import SessionLocal
 from app.db.models.playlist_track import PlaylistTrack
-from app.db.schemas.playlist_track_schema import PlaylistTrackSchema
-from app.db.schemas.playlist_track_with_track_schema import \
-    PlaylistTrackWithTrackSchema
 from app.services.playlist_track_service import PlaylistTrackService
 from app.utils.response import format_response_with_headers
 
