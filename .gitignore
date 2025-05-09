@@ -78,6 +78,7 @@ Desktop.ini
 *.swp
 *.bak
 *.tmp
+*.conf
 
 # test outputs
 *.out
