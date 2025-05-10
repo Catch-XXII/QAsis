@@ -3,25 +3,18 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.database import SessionLocal
-from app.db.models.media_type import MediaType
-from app.db.schemas.media_type_schema import MediaTypeSchema
-from app.services.media_type_service import MediaTypeService
-from app.utils.response import format_response_with_headers
+from backend.app.db.session import get_db
+from backend.app.db.models.media_type import MediaType
+from backend.app.db.schemas.media_type_schema import MediaTypeSchema
+from backend.app.services.media_type_service import MediaTypeService
+from backend.app.utils.response import format_response_with_headers
 
 router = APIRouter()
 
 
-async def get_db():
-    async with SessionLocal() as session:
-        yield session
-
-
 @router.get("/media-types")
 async def get_media_types(
-    skip: int = 0,
-    limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)
 ):
     total_stmt = select(func.count()).select_from(MediaType)
     total_result = await db.execute(total_stmt)
@@ -41,7 +34,7 @@ async def search_media_types(
     name: str = Query(...),
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     stmt = select(MediaType).where(MediaType.name.ilike(f"%{name}%"))
 

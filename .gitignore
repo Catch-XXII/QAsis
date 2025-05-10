@@ -83,7 +83,6 @@ Desktop.ini
 # test outputs
 *.out
 *.err
-*.log
 
 # SQLite DBs
 *.sqlite3
@@ -101,3 +100,4 @@ Desktop.ini
 /backend/.venv/
 /backend/.env
 /backend/*.sqlite3
+backend/alembic.ini

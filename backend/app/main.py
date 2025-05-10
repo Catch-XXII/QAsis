@@ -2,9 +2,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.v1 import (albums, artists, customers, employees, genres,
-                        invoice_lines, invoices, media_types, playlist_tracks,
-                        playlists, tracks)
+from backend.app.api.v1 import (
+    albums,
+    artists,
+    customers,
+    employees,
+    genres,
+    invoice_lines,
+    invoices,
+    media_types,
+    playlist_tracks,
+    playlists,
+    tracks,
+    search,
+)
 
 app = FastAPI(title="API")
 
@@ -27,3 +38,5 @@ app.include_router(artists.router, prefix="/v1", tags=["Artists"])
 app.include_router(tracks.router, prefix="/v1", tags=["Tracks"])
 app.include_router(albums.router, prefix="/v1", tags=["Albums"])
 app.include_router(genres.router, prefix="/v1", tags=["Genres"])
+
+app.include_router(search.router, prefix="/api/v1", tags=["Search"])

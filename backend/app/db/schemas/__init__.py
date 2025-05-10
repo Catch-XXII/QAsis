@@ -11,7 +11,7 @@ from .playlist_track_schema import PlaylistTrackSchema
 from .playlist_track_with_track_schema import PlaylistTrackWithTrackSchema
 from .track_schema import TrackSchema
 from .track_with_relations_schema import TrackWithRelations
-
+from .search_schema import SearchRequestSchema
 
 __all__ = [
     "AlbumSchema",
@@ -27,4 +27,5 @@ __all__ = [
     "PlaylistTrackWithTrackSchema",
     "TrackSchema",
     "TrackWithRelations",
+    "SearchRequestSchema",
 ]

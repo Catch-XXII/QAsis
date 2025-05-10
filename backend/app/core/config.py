@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     API_HOST: str
     API_PORT: int
     FRONTEND_ORIGIN: str
+    JWT_SECRET_KEY: str
+    JWT_ALGORITHM: str
 
     @computed_field
     @property
@@ -23,10 +25,6 @@ class Settings(BaseSettings):
 
     # New structure for getting settings v2.x
     model_config = SettingsConfigDict(env_file=".env")
-
-    # Old structure according to pydantic v1.x
-    # class Config:
-    #     env_file = ".env"
 
 
 settings = Settings()

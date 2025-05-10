@@ -3,26 +3,19 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.database import SessionLocal
-from app.db.models.track import Track
-from app.db.schemas.track_schema import TrackSchema
-from app.db.schemas.track_with_relations_schema import TrackWithRelations
-from app.services.track_service import TrackService
-from app.utils.response import format_response_with_headers
+from backend.app.db.session import get_db
+from backend.app.db.models.track import Track
+from backend.app.db.schemas.track_schema import TrackSchema
+from backend.app.db.schemas.track_with_relations_schema import TrackWithRelations
+from backend.app.services.track_service import TrackService
+from backend.app.utils.response import format_response_with_headers
 
 router = APIRouter()
 
 
-async def get_db():
-    async with SessionLocal() as session:
-        yield session
-
-
 @router.get("/tracks")
 async def get_tracks(
-    skip: int = 0,
-    limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)
 ):
     total_stmt = select(func.count()).select_from(Track)
     total_result = await db.execute(total_stmt)
@@ -44,7 +37,7 @@ async def search_tracks(
     genre_id: int | None = Query(None),
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     stmt = select(Track)
 

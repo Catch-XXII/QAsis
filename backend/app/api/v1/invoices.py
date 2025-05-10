@@ -3,25 +3,18 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.database import SessionLocal
-from app.db.models.invoice import Invoice
-from app.db.schemas.invoice_schema import InvoiceSchema
-from app.services.invoice_service import InvoiceService
-from app.utils.response import format_response_with_headers
+from backend.app.db.session import get_db
+from backend.app.db.models.invoice import Invoice
+from backend.app.db.schemas.invoice_schema import InvoiceSchema
+from backend.app.services.invoice_service import InvoiceService
+from backend.app.utils.response import format_response_with_headers
 
 router = APIRouter()
 
 
-async def get_db():
-    async with SessionLocal() as session:
-        yield session
-
-
 @router.get("/invoices")
 async def get_invoices(
-    skip: int = 0,
-    limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)
 ):
     total_stmt = select(func.count()).select_from(Invoice)
     total_result = await db.execute(total_stmt)
@@ -42,7 +35,7 @@ async def search_invoices(
     billing_country: str | None = Query(None),
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     stmt = select(Invoice)
 

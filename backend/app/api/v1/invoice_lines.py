@@ -3,25 +3,18 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.database import SessionLocal
-from app.db.models.invoice_line import InvoiceLine
-from app.db.schemas.invoice_line_schema import InvoiceLineSchema
-from app.services.invoice_line_service import InvoiceLineService
-from app.utils.response import format_response_with_headers
+from backend.app.db.session import get_db
+from backend.app.db.models.invoice_line import InvoiceLine
+from backend.app.db.schemas.invoice_line_schema import InvoiceLineSchema
+from backend.app.services.invoice_line_service import InvoiceLineService
+from backend.app.utils.response import format_response_with_headers
 
 router = APIRouter()
 
 
-async def get_db():
-    async with SessionLocal() as session:
-        yield session
-
-
 @router.get("/invoice-lines")
 async def get_invoice_lines(
-    skip: int = 0,
-    limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)
 ):
     total_stmt = select(func.count()).select_from(InvoiceLine)
     total_result = await db.execute(total_stmt)
@@ -42,7 +35,7 @@ async def search_invoice_lines(
     track_id: int | None = Query(None),
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     stmt = select(InvoiceLine)
 
@@ -65,7 +58,9 @@ async def search_invoice_lines(
 
 
 @router.get("/invoice-lines/{invoice_line_id}", response_model=InvoiceLineSchema)
-async def get_invoice_line_by_id(invoice_line_id: int, db: AsyncSession = Depends(get_db)):
+async def get_invoice_line_by_id(
+    invoice_line_id: int, db: AsyncSession = Depends(get_db)
+):
     service = InvoiceLineService(db)
     try:
         return await service.get_invoice_line_by_id(invoice_line_id)

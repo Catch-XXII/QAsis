@@ -2,26 +2,18 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.db.database import SessionLocal
-from app.db.models.employee import Employee
-from app.db.schemas.employee_schema import EmployeeSchema
-from app.services.employee_service import EmployeeService
-from app.utils.response import format_response_with_headers
+from backend.app.db.session import get_db
+from backend.app.db.models.employee import Employee
+from backend.app.db.schemas.employee_schema import EmployeeSchema
+from backend.app.services.employee_service import EmployeeService
+from backend.app.utils.response import format_response_with_headers
 
 router = APIRouter()
 
 
-async def get_db():
-    async with SessionLocal() as session:
-        yield session
-
-
 @router.get("/employees")
 async def get_employees(
-    skip: int = 0,
-    limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)
 ):
     total_stmt = select(func.count()).select_from(Employee)
     total_result = await db.execute(total_stmt)
@@ -43,7 +35,7 @@ async def search_employees(
     country: str | None = Query(None),
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     stmt = select(Employee)
 

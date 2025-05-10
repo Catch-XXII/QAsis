@@ -5,7 +5,7 @@ uvicorn[standard]==0.29.0
 # ORM and Database
 SQLAlchemy==2.0.30
 asyncpg==0.29.0
-alembic==1.13.1
+alembic==1.15.2
 psycopg2-binary
 pymssql
 
